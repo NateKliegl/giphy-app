@@ -1,0 +1,12 @@
+.menu {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.link {
+  margin: 2px;
+  text-align: center;
+  background-color: red;
+  flex-basis: calc(100% / 3 - 4px);
+  color: white;
+}
