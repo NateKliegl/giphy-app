@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import useFetch from "../hooks/useFetch";
 import GifDisplay from "./GifDisplay";
 
 export default function SearchPage({
@@ -7,45 +8,34 @@ export default function SearchPage({
   addFavorite,
   deleteFavorite,
 }) {
+  const [searchInput, setSearchInput] = useState("");
   const [search, setSearch] = useState("");
-  const [gifs, setGifs] = useState([]);
+  const { data, error, loading } = useFetch(search);
 
-  async function callAPI() {
-    try {
-      const url = `https://api.giphy.com/v1/gifs/search?api_key=Cl8TyQDyWS0dzM4QssTsPbwfdb0ypcfy&q=${search}&limit=25&offset=0&rating=pg-13&lang=en`;
-      const response = await fetch(url);
-      const { data } = await response.json();
-      setGifs(() =>
-        data.map((gif) => ({
-          id: gif.id,
-          title: gif.title,
-          url: gif.images.original.url,
-        }))
-      );
-    } catch (e) {
-      console.log(e);
-    }
-  }
   return (
     <div>
       <div className="search-field">
         <label htmlFor="searchBar">Search</label>
         <input
           id="search"
-          value={search}
+          value={searchInput}
           placeholder="Search for Gif"
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) => setSearchInput(e.target.value)}
+          onKeyPress={(e) => {
+            if (e.code === "Enter") {
+              setSearch(searchInput);
+            }
+          }}
         ></input>
       </div>
-      <button onClick={callAPI}>Search</button>
+      <button onClick={() => setSearch(searchInput)}>Search</button>
 
       <div>
-        {gifs.map((val) => (
+        {data.map((val) => (
           <GifDisplay
             id={val.id}
             title={val.title}
             url={val.url}
-            gifs={val}
             key={val.id}
             isFavorite={favorites.some((fave) => fave.id === val.id)}
             deleteFavorite={deleteFavorite}
