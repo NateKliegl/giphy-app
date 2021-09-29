@@ -7,8 +7,6 @@ export default function SearchPage({
   addFavorite,
   deleteFavorite,
 }) {
-  //!https://api.giphy.com/v1/gifs/search?api_key=Cl8TyQDyWS0dzM4QssTsPbwfdb0ypcfy&q=&limit=25&offset=0&rating=pg-13&lang=en
-
   const [search, setSearch] = useState("");
   const [gifs, setGifs] = useState([]);
 
