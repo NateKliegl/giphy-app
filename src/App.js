@@ -15,7 +15,7 @@ function App() {
   function addFavorite(gif) {
     setFavorites((curr) => [...curr, gif]);
   }
-  function deletefavorite(id) {
+  function deleteFavorite(id) {
     setFavorites((curr) => curr.filter((val) => val.id !== id));
   }
   const [activeUser, setActiveUser] = useState("");
@@ -31,14 +31,14 @@ function App() {
             activeUser={activeUser}
             favorites={favorites}
             addFavorite={addFavorite}
-            deletefavorite={deletefavorite}
+            deleteFavorite={deleteFavorite}
           />
         </Route>
         <Route path="/favorites">
           <FavoritesPage
             activeUser={activeUser}
             favorites={favorites}
-            deletefavorite={deletefavorite}
+            deleteFavorite={deleteFavorite}
           />
         </Route>
         <Route path="*">
