@@ -11,7 +11,7 @@ function Menu() {
         Search
       </NavLink>
       <NavLink className="link" to="/favorites" activeClassName="active">
-        Favorties
+        Favorites
       </NavLink>
     </nav>
   );

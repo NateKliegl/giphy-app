@@ -4,7 +4,7 @@ export default function useFetch(search) {
   // This hook uses state management AND hooks
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const url = `https://api.giphy.com/v1/gifs/search?api_key=Cl8TyQDyWS0dzM4QssTsPbwfdb0ypcfy&q=${search}&limit=25&offset=0&rating=pg-13&lang=en`;

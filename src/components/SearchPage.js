@@ -31,17 +31,21 @@ export default function SearchPage({
       <button onClick={() => setSearch(searchInput)}>Search</button>
 
       <div>
-        {data.map((val) => (
-          <GifDisplay
-            id={val.id}
-            title={val.title}
-            url={val.url}
-            key={val.id}
-            isFavorite={favorites.some((fave) => fave.id === val.id)}
-            deleteFavorite={deleteFavorite}
-            addFavorite={addFavorite}
-          />
-        ))}
+        {loading && <div>LOADING</div>}
+        {error && !loading && <div>{error}</div>}
+        {data &&
+          !loading &&
+          data.map((val) => (
+            <GifDisplay
+              id={val.id}
+              title={val.title}
+              url={val.url}
+              key={val.id}
+              isFavorite={favorites.some((fave) => fave.id === val.id)}
+              deleteFavorite={deleteFavorite}
+              addFavorite={addFavorite}
+            />
+          ))}
       </div>
     </div>
   );

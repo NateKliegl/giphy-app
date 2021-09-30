@@ -13,7 +13,7 @@ export default function GifDisplay({
       <h3>
         {id} - {title}
       </h3>
-      <img src={url}></img>
+      <img src={url} alt="gif"></img>
       {!isFavorite && (
         <button onClick={() => addFavorite({ id, title, url })}>
           Add Favorite
