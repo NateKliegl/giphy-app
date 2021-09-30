@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { connect } from "react-redux";
+import { setUser } from "../redux/actions";
 
-export default function LoginPage({ setActiveUser }) {
+function LoginPage({ setUser }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
@@ -38,7 +40,7 @@ export default function LoginPage({ setActiveUser }) {
             setError(true);
             return;
           }
-          setActiveUser(username);
+          setUser(username);
         }}
       >
         Login
@@ -46,3 +48,11 @@ export default function LoginPage({ setActiveUser }) {
     </div>
   );
 }
+const mapStateToProps = (state) => {
+  return {};
+};
+const mapDispatchToProps = {
+  setUser,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

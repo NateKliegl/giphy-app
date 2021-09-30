@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import GifDisplay from "./GifDisplay";
-export default function FavoritesPage({
-  activeUser,
-  favorites,
-  deleteFavorite,
-}) {
+import { deleteFavorite } from "../redux/actions";
+import { connect } from "react-redux";
+function FavoritesPage({ user, favorites, deleteFavorite }) {
   return (
     <div>
-      <div>{activeUser}</div>
+      <div>{user}</div>
       {favorites.map((val) => (
         <GifDisplay
           id={val.id}
@@ -22,3 +20,18 @@ export default function FavoritesPage({
     </div>
   );
 }
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+
+    favorites: state.favorites,
+  };
+};
+const mapDispatchToProps = {
+  deleteFavorite,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(FavoritesPage);
+
+// State - user, search, favorites
+// Actions -  deleteFavorite

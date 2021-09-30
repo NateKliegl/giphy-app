@@ -1,18 +1,14 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
-export default function ProtectedRoute({
-  activeUser,
-  children,
-  path,
-  protected,
-}) {
+import { connect } from "react-redux";
+function ProtectedRoute({ user, children, path, protected }) {
   const redirectTo = protected ? "/login" : "/search";
 
   if ((activeUser && protected) || (!activeUser && !protected)) {
     return (
       <Route path={path}>
         <FavoritesPage
-          activeUser={activeUser}
+          activeUser={user}
           favorites={favorites}
           deleteFavorite={deleteFavorite}
         />
@@ -25,4 +21,14 @@ export default function ProtectedRoute({
   return <div></div>;
 }
 
-// Look up turnary
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
+};
+const mapDispatchToProps = {};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProtectedRoute);
+
+// State - user
+// Actions - NONE

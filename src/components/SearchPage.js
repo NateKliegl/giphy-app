@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
 import useFetch from "../hooks/useFetch";
 import GifDisplay from "./GifDisplay";
+import { addFavorite, deleteFavorite, setSearch } from "../redux/actions";
+import { connect } from "react-redux";
 
-export default function SearchPage({
-  activeUser,
-  favorites,
-  addFavorite,
-  deleteFavorite,
-}) {
+function SearchPage({ user, favorites, addFavorite, deleteFavorite }) {
   const [searchInput, setSearchInput] = useState("");
   const [search, setSearch] = useState("");
   const { data, error, loading } = useFetch(search);
@@ -50,3 +47,20 @@ export default function SearchPage({
     </div>
   );
 }
+const mapStateToProps = (state) => {
+  return {
+    search: state.search,
+    user: state.user,
+    favorites: state.favorites,
+  };
+};
+const mapDispatchToProps = {
+  addFavorite,
+  deleteFavorite,
+  setSearch,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchPage);
+
+// State - user, search, favorites
+// Actions - addFavorite, deleteFavorite, setSearch

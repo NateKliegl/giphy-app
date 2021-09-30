@@ -8,5 +8,5 @@ export function setSearch(gifs) {
 
 export const CLEAR_SEARCH = "Clear Search";
 export function clearSearch() {
-  return { type: CLEAR_USER };
+  return { type: CLEAR_SEARCH };
 }
