@@ -1,5 +1,7 @@
 import "./App.css";
 import React, { useState } from "react";
+import ProtectedRoute from "./components/ProtectedRoute";
+
 import Menu from "./components/Menu";
 import {
   Route,
@@ -10,37 +12,35 @@ import {
 import LoginPage from "./components/LoginPage";
 import SearchPage from "./components/SearchPage";
 import FavoritesPage from "./components/FavoritePage";
+import { rootReducer, initialState } from "./shared/rootReducer";
+
+import { useReducer } from "react";
 function App() {
-  const [favorites, setFavorites] = useState([]);
-  function addFavorite(gif) {
-    setFavorites((curr) => [...curr, gif]);
-  }
-  function deleteFavorite(id) {
-    setFavorites((curr) => curr.filter((val) => val.id !== id));
-  }
-  const [activeUser, setActiveUser] = useState("");
+  const [state, dispatch] = useReducer(rootReducer, initialState);
+
   return (
     <Router>
-      <Menu />
+      <Menu user={state.user} dispatch={dispatch} />
+
       <Switch>
-        <Route path="/login">
-          <LoginPage setActiveUser={setActiveUser} />
-        </Route>
-        <Route path="/search">
+        <ProtectedRoute shielded={false} path="/login" user={state.user}>
+          <LoginPage dispatch={dispatch} />
+        </ProtectedRoute>
+        <ProtectedRoute user={state.user} shielded={true} path="/search">
           <SearchPage
-            activeUser={activeUser}
-            favorites={favorites}
-            addFavorite={addFavorite}
-            deleteFavorite={deleteFavorite}
+            user={state.user}
+            search={state.search}
+            favorites={state.favorites}
+            dispatch={dispatch}
           />
-        </Route>
-        <Route path="/favorites">
+        </ProtectedRoute>
+        <ProtectedRoute user={state.user} shielded={true} path="/favorites">
           <FavoritesPage
-            activeUser={activeUser}
-            favorites={favorites}
-            deleteFavorite={deleteFavorite}
+            user={state.user}
+            favorites={state.favorites}
+            dispatch={dispatch}
           />
-        </Route>
+        </ProtectedRoute>
         <Route path="*">
           <Redirect to="/login"></Redirect>
         </Route>

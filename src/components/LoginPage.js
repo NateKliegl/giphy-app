@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-
-export default function LoginPage({ setActiveUser }) {
+import { CLEAR_SEARCH, CLEAR_USER, SET_USER } from "../shared/rootReducer";
+export default function LoginPage({ dispatch }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
@@ -38,7 +38,7 @@ export default function LoginPage({ setActiveUser }) {
             setError(true);
             return;
           }
-          setActiveUser(username);
+          dispatch({ type: SET_USER, user: username });
         }}
       >
         Login

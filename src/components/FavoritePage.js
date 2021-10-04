@@ -1,13 +1,10 @@
 import React, { useState } from "react";
 import GifDisplay from "./GifDisplay";
-export default function FavoritesPage({
-  activeUser,
-  favorites,
-  deleteFavorite,
-}) {
+import { DELETE_FAVORITE } from "../shared/rootReducer";
+export default function FavoritesPage({ user, favorites, dispatch }) {
   return (
     <div>
-      <div>{activeUser}</div>
+      <div>{user}</div>
       {favorites.map((val) => (
         <GifDisplay
           id={val.id}
@@ -16,7 +13,7 @@ export default function FavoritesPage({
           gifs={val}
           key={val.id}
           isFavorite={true}
-          deleteFavorite={deleteFavorite}
+          deleteFavorite={(id) => dispatch({ type: DELETE_FAVORITE, id })}
         />
       ))}
     </div>
